@@ -1,0 +1,13 @@
+import express from 'express';
+import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
+import { searchHandler } from './routes/search';
+import { suggestHandler } from './routes/suggest';
+dotenv.config();
+const app = express();
+app.use(bodyParser.json());
+app.get('/health', (_req,res) => res.json({ok:true}));
+app.use('/search', searchHandler);
+app.use('/suggest-reply', suggestHandler);
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Backend listening on ${port}`));
